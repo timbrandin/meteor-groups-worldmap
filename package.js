@@ -1,7 +1,7 @@
 Package.describe({
   name: 'timbrandin:groups-worldmap',
   summary: 'Meteor Meetup Groups on a worldmap in SVG.',
-  version: '1.0.0',
+  version: '1.0.1',
   git: 'https://github.com/timbrandin/meteor-groups-worldmap'
 });
 
