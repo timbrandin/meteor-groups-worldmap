@@ -1,0 +1,242 @@
+<template name="groupsWorldmap">
+  <div class="groups-worldmap" style="height:0; padding-bottom:71%;">
+    <div style="margin-top: -21%;">
+      <svg id="groupsWorldmap" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+       viewBox="0 0 940 665.6" enable-background="new 0 0 940 665.6" xml:space="preserve">
+       {{> maskWorld}}
+       <g transform="translate(0,200)">
+         <g style="fill-opacity: 0.5">
+           {{> gWorld}}
+           <animate
+             attributeName="fill-opacity"
+             from="0.5" to="1"
+             begin="meteorIconGAnimation.end"
+             dur="0.3s" fill="freeze" />
+         </g>
+         <g transform="translate(470,232.8)">
+           <animate id="init" begin="mousedown" />
+           <g transform="translate(-72.4,-71.2)">
+             <g id="strike">
+               <g style="cursor:pointer">
+                 <rect x="0" y="0" width="144.8" height="142.4" fill="transparent"/>
+                 {{> meteorIconPath}}
+                 <animateTransform
+                   id="meteorIconGAnimation"
+                   attributeType="XML"
+                   attributeName="transform"
+                   type="translate"
+                   from="0,0" to="30,30"
+                   begin="init.begin" dur="0.5s"
+                   keySplines="
+                       0.1 0.8 0.2 1;
+                       0.1 0.8 0.2 1;
+                       0.1 0.8 0.2 1;
+                       0.1 0.8 0.2 1;
+                       0.1 0.8 0.2 1;
+                       0.1 0.8 0.2 1"
+                   keyTimes="
+                       0;0.22;0.33;0.55;0.66;0.88;1"
+                   calcMode="spline"
+                   fill="freeze" />
+                 <animate
+                   attributeName="fill-opacity"
+                   from="1" to="0"
+                   begin="init.begin" dur="0.5s"
+                   keySplines="
+                       0.1 0.8 0.2 1;
+                       0.1 0.8 0.2 1;
+                       0.1 0.8 0.2 1;
+                       0.1 0.8 0.2 1;
+                       0.1 0.8 0.2 1;
+                       0.1 0.8 0.2 1"
+                   keyTimes="
+                       0;0.22;0.33;0.55;0.66;0.88;1"
+                   calcMode="spline"
+                   fill="freeze" />
+                 <animateTransform
+                   begin="meteorIconGAnimation.end"
+                   attributeType="XML"
+                   attributeName="transform"
+                   type="translate"
+                   from="30,30" to="500,500"
+                   dur="0.1s"
+                   fill="freeze" />
+               </g>
+                 <g transform="translate(-35,162.4)" opacity="1" style="cursor:pointer">
+                   <rect x="0" y="10" rx="18" ry="18" width="240" height="36" fill="#4F4F4F" stroke="#FFFFFF" stroke-width="2" stroke-opacity="0.8" fill-opacity="0.5" />
+                   <text fill="#FFFFFF" font-family="sans-serif" font-size="17" fill-opacity="0.8"
+                     x="120" y="21" style="text-anchor: middle; dominant-baseline: hanging;">
+                     START METEOR SHOWER
+                   </text>
+                   <animate id="animation1"
+                     attributeName="opacity"
+                     from="1" to="0.3" dur="1.5s"
+                     begin="0s;animation2.end"
+                     end="meteorIconGAnimation.begin" />
+                   <animate id="animation2"
+                     attributeName="opacity"
+                     from="0.3" to="1" dur="1.5s"
+                     begin="animation1.end"
+                     end="meteorIconGAnimation.begin" />
+                   <animate
+                     begin="meteorIconGAnimation.begin"
+                     attributeName="opacity"
+                     from="1" to="0"
+                     dur="0.75s"
+                     keySplines="
+                     0.1 0.8 0.2 1;
+                     0.1 0.8 0.2 1;
+                     0.1 0.8 0.2 1;
+                     0.1 0.8 0.2 1;
+                     0.1 0.8 0.2 1;
+                     0.1 0.8 0.2 1"
+                     keyTimes="
+                     0;0.22;0.33;0.55;0.66;0.88;1"
+                     calcMode="spline"
+                     fill="freeze" />
+                   <animateTransform
+                     begin="meteorIconGAnimation.end"
+                     attributeType="XML"
+                     attributeName="transform"
+                     type="translate"
+                     from="-35,162.4" to="-35,300"
+                     dur="0.1s"
+                     fill="freeze" />
+               </g>
+             </g>
+           </g>
+         </g>
+
+         {{> meteorGroups}}
+       </g>
+      </svg>
+    </div>
+  </div>
+</template>
+
+<template name="meteorGroups">
+  {{> svgDefs}}
+
+  <g class="meteor-spread" mask="url(#maskWorld)">
+    {{#each meteors}}
+    {{> svgSpread}}
+    {{/each}}
+  </g>
+
+  {{#each meteors}}
+  {{> svgMeteor}}
+  {{/each}}
+</template>
+
+<template name="svgDefs">
+  <defs>
+    <path id="meteorTrail" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" fill-opacity="0.3" d="M-0.2-12c-2.9-132.9,1.3-294.9,1.3-294.9
+    S1.6,71.5-0.2-12z"/>
+    <clipPath id="clipMeteorTrail">
+      <use xlink:href="#meteorTrail" overflow="visible"/>
+    </clipPath>
+    <linearGradient id="grad1" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="white"/>
+      <stop offset="50%" stop-color="white" stop-opacity="30%"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0" />
+    </linearGradient>
+    <circle id="circle" r="5" style="fill:#DE4F4F;stroke:#FFFFFF;stroke-width:1;fill-opacity:1;" />
+    <circle id="circleSpread" r="6" style="fill:#999999;fill-opacity:1" />
+    <filter id="dropGlow" width="1.5" height="1.5" x="-.25" y="-.25">
+      <feGaussianBlur id="feGaussianBlur5384" in="SourceAlpha" stdDeviation="15.000000" result="blur"/>
+      <feColorMatrix id="feColorMatrix5386" result="bluralpha" type="matrix" values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 0.800000 0 "/>
+      <feOffset id="feOffset5388" in="bluralpha" dx="0.000000" dy="0.000000" result="offsetBlur"/>
+      <feMerge id="feMerge5390">
+          <feMergeNode id="feMergeNode5392" in="offsetBlur"/>
+          <feMergeNode id="feMergeNode5394" in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+</template>
+
+<template name="svgMeteor">
+  <g transform="translate({{cx}},{{cy}})">
+    <animate class="launch" begin="strike.click" id="launch{{_id}}" dur="{{delay}}s" />
+    {{> svgImpact}}
+    <use id="circle{{_id}}" transform="scale(0)" xlink:href="#circle" />
+    <animateTransform
+      xlink:href="#circle{{_id}}"
+      attributeType="XML"
+      attributeName="transform"
+      type="scale"
+      begin="launch{{_id}}.end + 5s"
+      from="0" to="1" dur="0.3s" fill="freeze" />
+  </g>
+</template>
+
+<template name="svgImpact">
+  <circle fill="#999999" r="{{r}}" fill-opacity="0.5" transform="scale(0)">
+    <animateTransform
+      id="explode{{_id}}"
+      attributeType="XML"
+      attributeName="transform"
+      type="scale"
+      from="0" to="10"
+      begin="launch{{_id}}.end + 0.75s" dur="0.2s"
+      keySplines="
+          0.1 0.8 0.2 1;
+          0.1 0.8 0.2 1;
+          0.1 0.8 0.2 1;
+          0.1 0.8 0.2 1;
+          0.1 0.8 0.2 1;
+          0.1 0.8 0.2 1"
+      keyTimes="
+          0;0.22;0.33;0.55;0.66;0.88;1"
+      calcMode="spline" fill="freeze" />
+    <animate
+      class="fade-out"
+      attributeName="fill-opacity"
+      from="0.5" to="0"
+      begin="explode{{_id}}.begin" dur="0.8s"
+      keySplines="
+          0.1 0.8 0.2 1;
+          0.1 0.8 0.2 1;
+          0.1 0.8 0.2 1;
+          0.1 0.8 0.2 1;
+          0.1 0.8 0.2 1;
+          0.1 0.8 0.2 1"
+      keyTimes="
+          0;0.22;0.33;0.55;0.66;0.88;1"
+      calcMode="spline" fill="freeze" />
+  </circle>
+  <g transform="translate(0,0) rotate(-45 0 0)">
+    <g clip-path="url(#clipMeteorTrail)">
+      <rect x="0" y="-620" fill="url(#grad1)" stroke="none" stroke-miterlimit="10" width="10" height="300">
+        <animateMotion
+          from="0,-620" to="0,600"
+          begin="launch{{_id}}.end"
+          dur="1s" fill="freeze" />
+      </rect>
+    </g>
+  </g>
+</template>
+
+<template name="svgSpread">
+  <g transform="translate({{cx}},{{cy}})">
+    <use transform="scale(0)" xlink:href="#circleSpread">
+      <animateTransform
+        id="spread{{id}}"
+        begin="launch{{_id}}.end + 0.75s"
+        attributeType="XML"
+        attributeName="transform"
+        type="scale"
+        from="0" to="{{r}}" dur="16s"
+        keySplines="
+            0.1 0.8 0.2 1;
+            0.1 0.8 0.2 1;
+            0.1 0.8 0.2 1;
+            0.1 0.8 0.2 1;
+            0.1 0.8 0.2 1;
+            0.1 0.8 0.2 1"
+        keyTimes="
+            0;0.22;0.33;0.55;0.66;0.88;1"
+        calcMode="spline"
+        fill="freeze" />
+    </use>
+  </g>
+</template>
