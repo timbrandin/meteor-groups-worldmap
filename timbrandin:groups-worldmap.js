@@ -7,14 +7,10 @@ Locations = new Meteor.Collection('groups', {
   }
 });
 
-// Session.set('ready', false);
-// Session.set('rendered', false);
-// Session.set('launch', false);
+Session.set('launch', false);
 
 // Subscribe.
-RemoteGroups.subscribe('groups', function() {
-  Session.set('ready', true);
-});
+RemoteGroups.subscribe('groups');
 
 Template.meteorGroups.helpers({
   'meteors': function() {
@@ -25,3 +21,16 @@ Template.meteorGroups.helpers({
     return meteors;
   }
 });
+
+Template.groupsWorldmap.events({
+  'click #strike': function() {
+    Session.set('launch', true);
+  }
+});
+
+Template.svgMeteor.rendered = function() {
+  var launch = this.find('.launch');
+  if (launch && Session.get('launch')) {
+    launch.beginElement();
+  }
+}
